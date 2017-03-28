@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dondrag.js</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="jumbotron" id="jumbotron">
+				<h1>Hello, Dondrag!</h1>
+				<p>The JavaScript plugin for dom structure to drag.</p>
+				<a href="https://github.com/NathanJiang/Donsort" class="button"><small>Follow me on</small>GitHub</a>
+			</div>
+		</div>
+	</header>
+	<div class="container" style="padding-top: 330px;">
+		<div class="wrapper">
+			<div id="demo1">
+				<p>All-NBA Team (Only Pull)</p>
+				<ul class="panel-list block__list block__list_words" id="Dondrag_1">
+					<li>Chris Paul</li>
+					<li>Kobe Bryant</li>
+					<li>Tim Duncan</li>
+					<li>Kevin Durant</li>
+					<li>LeBron James</li>
+				</ul>
+			</div>
+
+			<div id="demo2">
+				<p>Bench players (Only Put)</p>
+				<ul class="panel-list block__list block__list_words" id="Dondrag_2">
+					<li>Stephen Curry</li>
+					<li>James Harden</li>
+					<li>Anthony Davis</li>
+					<li>Damian Lillard</li>
+					<li>Kawhi Leonard</li>
+					<li>Kyrie Irving</li>
+					<li>Paul George</li>
+					<li>Russell Westbrook</li>
+				</ul>
+			</div>
+			<div id="pic_1"></div>
+		</div>
+	</div>
+
+<div class="container" style="padding-top: 30px;">
+		<div class="wrapper">
+			<div id="demo1">
+				<p>The Most Valuable Player Rankings</p>
+				<ul class="panel-list block__list block__list_words" id="Dondrag_3">
+					<li>Chris Paul</li>
+					<li>Kobe Bryant</li>
+					<li>Tim Duncan</li>
+					<li>LeBron James</li>
+					<li>Stephen Curry</li>
+					<li>Russell Westbrook</li>
+				</ul>
+			</div>
+
+			<div id="demo2">
+				<p>Bench players (Clone)</p>
+				<ul class="panel-list block__list block__list_words" id="Dondrag_4">
+					<li>James Harden</li>
+					<li>Anthony Davis</li>
+					<li>Damian Lillard</li>
+					<li>Kawhi Leonard</li>
+					<li>Kevin Durant</li>
+					<li>Kyrie Irving</li>
+					<li>Paul George</li>
+				</ul>
+			</div>
+			<div id="pic_2"></div>
+		</div>
+	</div>
+
+	<div class="container" style="padding-top: 30px;">
+		<div class="wrapper">
+			<div id="demo1">
+				<p>Los Angeles Clippers</p>
+				<ul class="panel-list block__list block__list_words" id="Dondrag_5">
+					<li>Chris Paul</li>
+					<li>J.J. Redick</li>
+					<li>DeAndre Jordan</li>
+					<li>Blake Griffin</li>
+					<li>Luc Richard Mbah a Moute</li>
+				</ul>
+			</div>
+
+			<div id="demo2">
+				<p>Timeout (Put & Pull)</p>
+				<ul class="panel-list block__list block__list_words" id="Dondrag_6">
+					<li>Paul Pierce</li>
+					<li>Austin Rivers</li>
+					<li>Wesley Johnson</li>
+					<li>Jamal Crawford</li>
+					<li>Marreese Speights</li>
+					<li>Raymond Felton</li>
+					<li>Brandon Bass</li>
+					<li>Alan Anderson</li>
+					<li>Diamond Stone</li>
+				</ul>
+			</div>
+			<div id="pic_3"></div>
+		</div>
+	</div>
+
+
+
+	<hr style="margin: 120px 0px 0px;">
+	<footer>
+		<div id="footer">© <a href="http://jiangyu.me" rel="nofollow" style="color:#6E7173">Nathan</a> </div>
+	</footer>
+</body>
+
+
+
+<script type="text/javascript" src="./Dondrag.js"></script>
+<script type="text/javascript">
+
+window.onscroll=function(){
+	var scrollTop =document.documentElement.scrollTop||document.body.scrollTop;
+	if(scrollTop> 175 || window.innerWidth < 700 ){
+		document.getElementById("jumbotron").classList.add("fixed")
+	} else {
+		document.getElementById("jumbotron").classList.remove("fixed")
+	}
+}
+window.onload=function(){
+	Dondrag.create(document.getElementById('Dondrag_1'), {
+		group: {
+			pull: true
+		},
+		animation: 150,
+  	});
+	Dondrag.create(document.getElementById('Dondrag_2'), {
+		group: {
+			put: true
+		},
+		animation: 150,
+  	});
+  	 Dondrag.create(document.getElementById('Dondrag_3'), {
+		group: {
+			pull: true
+		},
+		clone: true,
+		animation: 150,
+  	});
+	Dondrag.create(document.getElementById('Dondrag_4'), {
+		group: {
+			put:  true
+		},
+		clone: true,
+		animation: 150,
+  	});
+	Dondrag.create(document.getElementById('Dondrag_5'), {
+		group: {
+			pull: true,
+			put : true
+		},
+		animation: 150,
+  	});
+	Dondrag.create(document.getElementById('Dondrag_6'), {
+		group: {
+			pull: true,
+			put:  true
+		},
+		animation: 150,
+  	});
+}
+
+
+
+
+
+// (function(){
+// 	Dondrag.create(document.getElementById('Dondrag_2'), {
+// 		animation: 150,
+//   	});
+// })()
+</script>
+</html>
