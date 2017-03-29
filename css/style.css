@@ -67,6 +67,8 @@ a.button small {
 	background-image: -ms-linear-gradient(bottom, #F4E2C9 20%, #F4D7C9 100%);
 	background-image: linear-gradient(to bottom, #F4E2C9 20%, #F4D7C9 100%);
 	height: 500px;
+	margin: 20px 0px 40px;
+
 }
 
 table {
@@ -116,7 +118,6 @@ h2 a{
 	color: #ccc !important;
 	text-decoration: none;
 }
-
 .wrapper div{
 	padding: 20px;  
 	float: left;

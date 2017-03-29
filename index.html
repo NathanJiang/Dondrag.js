@@ -6,6 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<style type="text/css">
+	#foo{
+		list-style-type: inherit;
+    	width: 100%;
+    	padding: 10px;
+	}
+	#foo li{
+		margin: 5px 0px;
+	}
+	</style>
 </head>
 <body>
 	<header>
@@ -18,6 +28,46 @@
 		</div>
 	</header>
 	<div class="container" style="padding-top: 330px;">
+		<p><b>Dondrag.js</b> is a JavaScript library for dom structure to be randomly or under some rules. Dondrag.js helps you to regularize your <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> in your HTML. The only work is to bind #id on destination <code>&lt;ul&gt;</code> / <code>&lt;ol&gt;</code> tags. After prepared work, user can drag li between one list or some lists, also clone work is supported. Moreover, user can set every list’s special binded rules. What a pity, now, **touch event is not supported**.</p>
+		<p><a href="http://jiangyu.me/web/Dondrag/">Demo</a> | <a href="http://jiangyu.me/2017/03/29/Dondrag-js/">中文文档</a></p>
+		<p>Download the latest version <span id="version"> (1.0.0)</span> here:</p>
+		<ul>
+			<li><a id="download" href="https://github.com/NathanJiang/Dondrag.js/archive/master.zip">Dondrag.zip</a></li>
+		</ul>
+		<p>To link directly to the latest release, copy this snippet:</p>
+		<pre><code><span>&lt;script src="http://www.jiangyu.me/web/Dondrag/js/Dondrag.js"&gt;&lt;/script</span>&gt;</span></code></pre>
+		<p>The <a href="https://github.com/NathanJiang/Dondrag.js">full source and tests</a> are also available <a href="https://github.com/NathanJiang/Dondrag.js/">for download</a> on GitHub.</p>
+		
+		<h2><a name="features" href="#features">#</a> Features</h2>
+		<ul id="foo">
+			<li>Supports modern browsers, but touch devices not supported now</li>
+			<li>Can drag from one list to another or within the same list</li>
+			<li>CSS animation when moving items</li>
+			<li>Smart auto-scrolling</li>
+			<li>Built using native HTML5 drag and drop API</li>
+			<li>No jQuery</li>
+		</ul>
+
+		<h2><a name="usage" href="#usage">#</a> Usage</h2>
+		<pre><code><span>// HTML Part</span>
+<span>...</span>
+<span>&lt;ul id="demo"&gt;</span>
+	<span>&lt;li&gt;item 1&lt;/td&gt;</span>
+	<span>&lt;li&gt;item 2&lt;/td&gt;</span>
+	<span>&lt;li&gt;item 3&lt;/td&gt;</span>
+<span>&lt;/td&gt;</span>
+<span></span>
+<span>// JavaScript part</span>
+<span>Dondrag.create(document.getElementById('demo'), {</span>
+    <span>group: {</span>
+    	<span>pull: true</span>
+    <span>},</span>
+    <span>clone: false,</span>
+    <span>animation: 150,</span>
+<span>});</span></code></pre>
+		<p>Only support for ol || ul, other tags will be supported continuously.</p>
+		
+		<h2><a name="example" href="#example">#</a> Examples</h2>
 		<div class="wrapper">
 			<div id="demo1">
 				<p>All-NBA Team (Only Pull)</p>
@@ -45,9 +95,6 @@
 			</div>
 			<div id="pic_1"></div>
 		</div>
-	</div>
-
-<div class="container" style="padding-top: 30px;">
 		<div class="wrapper">
 			<div id="demo1">
 				<p>The Most Valuable Player Rankings</p>
@@ -75,9 +122,6 @@
 			</div>
 			<div id="pic_2"></div>
 		</div>
-	</div>
-
-	<div class="container" style="padding-top: 30px;">
 		<div class="wrapper">
 			<div id="demo1">
 				<p>Los Angeles Clippers</p>
@@ -107,9 +151,6 @@
 			<div id="pic_3"></div>
 		</div>
 	</div>
-
-
-
 	<hr style="margin: 120px 0px 0px;">
 	<footer>
 		<div id="footer">© <a href="http://jiangyu.me" rel="nofollow" style="color:#6E7173">Nathan</a> </div>
@@ -125,6 +166,7 @@ window.onscroll=function(){
 	var scrollTop =document.documentElement.scrollTop||document.body.scrollTop;
 	if(scrollTop> 175 || window.innerWidth < 800 ){
 		document.getElementById("jumbotron").classList.add("fixed")
+		// document.querySelectorAll(".container")[1].style.paddingTop = "80px";
 	} else {
 		document.getElementById("jumbotron").classList.remove("fixed")
 	}
@@ -132,6 +174,7 @@ window.onscroll=function(){
 window.onload=function(){
 	if( window.innerWidth < 800 ){
 		document.getElementById("jumbotron").classList.add("fixed")
+		document.querySelectorAll(".container")[1].style.paddingTop = "80px";
 	} 
 
 	Dondrag.create(document.getElementById('Dondrag_1'), {
@@ -170,6 +213,13 @@ window.onload=function(){
 	Dondrag.create(document.getElementById('Dondrag_6'), {
 		group: {
 			pull: true,
+		},
+		animation: 150,
+  	});
+
+  	Dondrag.create(document.getElementById('foo'), {
+		group: {
+			pull: true
 		},
 		animation: 150,
   	});
