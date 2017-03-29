@@ -48,13 +48,13 @@ Dondrag.create(document.getElementById('demo'), {
 ~~You can use any element for the list and its elements, not just ul/li. Here is an example with divs.~~ Only support for `ol` || `ul`, other tags will be supported continuously.
 
 # Options
-### `group` options
+#### `group` options
 To drag elements from one list into another, if you set `pull: true`, this list can received the element from other lists.
 
-### `clone` Boolean
+#### `clone` Boolean
 To clone the current element and drag it, the cloned element can be dragged into other **pull** lists.
 
-### `animation` time
+#### `animation` time
 Animation speed moving items when sorting. Unit of this is ms.
 
 
