@@ -18,7 +18,7 @@
 			throw new Error("Dondrag.js requires a window with a document");
 		};
 	}
-
+	console.log("I Need a Job: nathanpro@pku.edu.cn");
 	var draggedEle,
 		draggedRect,
 		parentEl,
@@ -30,8 +30,9 @@
 		lastCSS,
 		lastParentCSS,
 
+		ms,
 
-		expando = 'Sortable' + (new Date).getTime(),
+		expando = 'Dondrag' + (new Date).getTime(),
 
 		R_FLOAT = /left|right|inline/,
 
@@ -61,7 +62,7 @@
 			// ignore: 'a, img',
 			// filter: null,
 			// preventOnFilter: true,
-			// animation: 0,
+			animation: 0,
 			// setData: function (dataTransfer, dragEl) {
 				// dataTransfer.setData('Text', dragEl.textContent);
 			// },
@@ -75,7 +76,7 @@
 			// fallbackTolerance: 0,
 			fallbackOffset: {x: 0, y: 0}
 		};
-
+		ms = options.animation;
 
 		// Set default options
 		for (var name in defaults) {
@@ -116,9 +117,7 @@
 				// filter = options.filter,
 				startIndex;
 			
-		
 			var draggable =  /[uo]l/i.test(ele.nodeName) ? 'li' : '>*';
-			
 
 			target = _located(target, ele);
 			this._prepareOnDragStart(evt, target);
@@ -127,6 +126,7 @@
 		_prepareOnDragStart: function(evt, target){
 			var _this = this,
 				ele = _this.ele;
+			
 			draggedEle = target;
 			draggedEle.draggable = _this.nativeDraggable;
 			draggedEle.style['will-change'] = 'transform';
@@ -139,7 +139,6 @@
 			}
 		},
 		_onDragStart: function(evt){
-			// console.log("start:", draggedEle)
 			hideCloneNode = draggedEle.cloneNode(true)
 			hideCloneNode.classList.remove("dondrag-chosen");
 			hideCloneNode.style = false;
@@ -159,39 +158,43 @@
 				target= _located(evt.target, ele);
 			
 			draggedRect = draggedEle.getBoundingClientRect();
-			// if(options.group === "put" ){
-			// console.log(Object.keys(options.group).indexOf("pull"))
-			// console.log(!draggedEle.parentNode.contains(target))
-			// }
-			// 
 
 			/*
-			 * 在其他的parentNode下, 并且只能有 pull事件
+			 * > 在其他的parentNode下, 且
+			 * > target 没有设置 pull:true    时
+			 * > 无法放置
 			 */
-			if(!draggedEle.parentNode.contains(target) && Object.keys(options.group).indexOf("pull")){
+			// if(!draggedEle.parentNode.contains(target) && Object.keys(options.group).indexOf("pull")){
+			if(!draggedEle.parentNode.contains(target) && !options.group["pull"]){
 				// console.log(123,Object.keys(options.group).indexOf("pull"))
 				return
 			}
-			// console.log(Object.keys(options.group).indexOf("pull"))
-			if(options.clone == true && hideCloneNode.parentNode.contains(target) && (Object.keys(options.group).indexOf("pull")===-1) ){
-				return
-			}
-			if( target !== draggedEle ){
-				// console.log("enter", "---------->",target, this.options)
-			}
+
+			/**
+			 * clone 设置为 true, 且
+			 * 隐藏节点和目标节点为兄弟节点, 且
+			 * 没有设置pull为true
+			 * 
+			 */
+			// if( options.clone == true && 
+			// 	hideCloneNode.parentNode.contains(target) && 
+			// 	!options.group.hasOwnProperty("pull")
+			// 	// (Object.keys(options.group).indexOf("pull")===-1) 
+			// ){
+			// 	console.log(32131,Object.keys(options.group).indexOf("pull"))
+			// 	return
+			// }
 
 			if(target!==null){
 				// if(   target !== draggedEle && target.nodeName===draggedEle.nodeName){
-				if( target!==null && target !== draggedEle && target.nodeName!="UL"){
+				// if( target!==null && target !== draggedEle && target.nodeName!="UL"){
+				if( target!==null && target !== draggedEle && target.nodeName===draggedEle.nodeName){
 					if (lastEle !== target) {
 							lastEle = target;							
 							lastCSS = _css(target);
 							lastParentCSS = _css(target.parentNode);
 						}
 						targetRect = target.getBoundingClientRect();
-						
-
-
 
 						var width = targetRect.right - targetRect.left,
 							height = targetRect.bottom - targetRect.top,
@@ -221,11 +224,13 @@
 							} else {
 								// draggedEle.before(draggedEle.cloneNode(true))
 								target.parentNode.insertBefore(draggedEle, after ? nextSibling : target);
+								// console.log("now")
 								if(options.clone == true && hideCloneNode !==null && !hideCloneNode.parentNode.contains(draggedEle) ){
+									// console.log("~~~~")
 									hideCloneNode.style = false;
 									hideCloneNode.removeAttribute("draggable");
 									hideCloneNode.removeAttribute("class");
-								}
+								} 
 
 								// draggedEle.before(draggedEle.cloneNode(true))
 							}
@@ -233,49 +238,40 @@
 						parentEl = draggedEle.parentNode; // actualization
 						_animate(draggedRect, draggedEle);
 						_animate(targetRect, target);
-						
-
-						// after = (nextSibling !== draggedEle) && !isLong || halfway && isLong;
-						// if (!draggedEle.contains(document.querySelector('#Dondrag'))) {
-						// 		target.parentNode.insertBefore(draggedEle, after ? nextSibling : target);
-
 						}
 				
 				}
 			}
 	    },
       	_onDragLeave: function (e) { },
-      	_onDragOver: function (e) { 
-      		// /if(e.target!==draggedEle)
-      		e.preventDefault(); 
-      	},
+      	_onDragOver: function (e) {  e.preventDefault(); },
       	_onDrop: function (e) {
-      		// console.log("end", e.target)
       		var ele    = this.ele,
 				_this  = this,
 				options= this.options;
-      		if( hideCloneNode !==null && options.clone !== true){
+
+      		if( (hideCloneNode !==null && options.clone !== true) ||
+      			(	options.clone == true && 
+      				hideCloneNode !==null && 
+      				hideCloneNode.parentNode.contains(draggedEle)  
+      			))
+      		{
 				hideCloneNode.parentNode.removeChild(hideCloneNode)
 				hideCloneNode = null
-			} 
+			}
 
       		draggedEle.classList.remove('dondrag-chosen');
       		draggedEle.style = null;
       		draggedEle.removeAttribute("draggable");
 			draggedEle.removeAttribute("class");
-    		// var id = e.dataTransfer.getData('text/plain');
-    		// var src = document.getElementById(id);
-    		// var target = e.target;
-    	// dest = _index(target)
-      	}
-      	
+      	}      	
 	}
 
 
 
 	function _onMove(fromEl, toEl, dragEl, dragRect, targetEl, targetRect, originalEvt) {
 		var evt,
-			sortable = fromEl[expando],
+			dondragit = fromEl[expando],
 			onMoveFn,
 			retVal;
 
@@ -292,18 +288,17 @@
 		fromEl.dispatchEvent(evt);
 
 		if (onMoveFn) {
-			retVal = onMoveFn.call(sortable, evt, originalEvt);
+			retVal = onMoveFn.call(dondragit, evt, originalEvt);
 		}
 
 		return retVal;
 	}
-
-
 	function _unsilent() {
 		_silent = false;
 	}
 	function _animate(prevRect, target) {
-		var ms =150;
+		// console.log(options)
+		// var ms = .animation;
 
 		if (ms) {
 			var currentRect = target.getBoundingClientRect();
@@ -364,6 +359,7 @@
 			}
 		}
 	}
+	
 	function _on(ele, evt, fn){
 		ele.addEventListener(evt, fn, false);
 	}

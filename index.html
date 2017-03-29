@@ -118,18 +118,22 @@
 
 
 
-<script type="text/javascript" src="./Dondrag.js"></script>
+<script type="text/javascript" src="./js/Dondrag.js"></script>
 <script type="text/javascript">
 
 window.onscroll=function(){
 	var scrollTop =document.documentElement.scrollTop||document.body.scrollTop;
-	if(scrollTop> 175 || window.innerWidth < 700 ){
+	if(scrollTop> 175 || window.innerWidth < 800 ){
 		document.getElementById("jumbotron").classList.add("fixed")
 	} else {
 		document.getElementById("jumbotron").classList.remove("fixed")
 	}
 }
 window.onload=function(){
+	if( window.innerWidth < 800 ){
+		document.getElementById("jumbotron").classList.add("fixed")
+	} 
+
 	Dondrag.create(document.getElementById('Dondrag_1'), {
 		group: {
 			pull: true
@@ -138,35 +142,34 @@ window.onload=function(){
   	});
 	Dondrag.create(document.getElementById('Dondrag_2'), {
 		group: {
-			put: true
 		},
 		animation: 150,
   	});
+
   	 Dondrag.create(document.getElementById('Dondrag_3'), {
 		group: {
-			pull: true
+			pull: true,
 		},
 		clone: true,
 		animation: 150,
   	});
 	Dondrag.create(document.getElementById('Dondrag_4'), {
 		group: {
-			put:  true
+			pull: false
 		},
 		clone: true,
 		animation: 150,
   	});
+  	
 	Dondrag.create(document.getElementById('Dondrag_5'), {
 		group: {
 			pull: true,
-			put : true
 		},
 		animation: 150,
   	});
 	Dondrag.create(document.getElementById('Dondrag_6'), {
 		group: {
 			pull: true,
-			put:  true
 		},
 		animation: 150,
   	});

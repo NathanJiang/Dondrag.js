@@ -1,60 +1,63 @@
-# Donsort
-The JavaScript plugin for dom structure to sorted.
+# Dondrag.js
+The JavaScript library for dom structure to be dragged randomly.
 
-**Donsort.js** is a JavaScript plugin for dom structure to be sorted by its own rules. Donsort helps you to sort table's column by desc or asc order. The only work is to add "#id" on some special tags, such as `<table>`, `<tbody>`, the prepared `<td>`. When the binding work finished, users can click the binded `<td>`. Then, the column of clicked tags would sorted by asc order, and another click would have the desc order result.
+**Dondrag.js** is a JavaScript library for dom structure to be randomly or under some rules. Dondrag.js helps you to regularize your `<ul>` or `<ol>` in your HTML. The only work is to bind `#id` on destination `ul` / `ol` tags. After prepared work, user can drag `li` between one list or some lists, also clone work is supported. Moreover, user can set every list’s special binded rules. What a pity, now, **touch event is not supported.**
 
-[Demo](http://www.jiangyu.me/web/Donsort)｜[中文文档](https://github.com/NathanJiang/Donsort/)
+[Demo](http://jiangyu.me/web/Dondrag/) | [中文文档](http://jiangyu.me/2017/03/29/Dondrag-js/)
 
 Download the latest version (1.0.0) here:
 
-- [Donsort.zip](https://github.com/NathanJiang/Donsort/archive/master.zip)
+- [Dondrag.zip](https://github.com/NathanJiang/Dondrag.js/archive/master.zip)
 
 To link directly to the latest release, copy this snippet:
 
 ``` html
-<script src="http://www.jiangyu.me/web/Donsort/js/Donsort.js"></script>
+<script src="http://www.jiangyu.me/web/Dondrag/js/Dondrag.js"></script>
 ```
 
 The full source and tests are also available for download on GitHub.
 
-# Introduction
+# Features
+- Supports modern browsers, but touch devices not supported now
+- Can drag from one list to another or within the same list
+- CSS animation when moving items
+- Smart auto-scrolling
+- Built using native HTML5 drag and drop API
+- No jQuery
 
-Donsort allows you to bind sort function with Dom by rule of "table - [thead,tbody]", and then click the binded `<td>` Tag, the data below it would sort automatically. For example, a table has a column called "score", when you click `<td>`score`</td>`, the score column would be sorted.
-
-The odd click event would get asc order result, the even click event would get desc order.
 
 # Usage
-
-For example, to bind the sort function in Chris Paul's scores in career.
-
-The result is as follows, you can click the "green" tag to sort the column:
-
 ```JavaScript
 // HTML Part
 ...
-<td id="score1">得分</td>
+<ul id="demo">
+	<li>item 1</li>
+	<li>item 2</li>
+	<li>item 3</li>
+</ul>
 
 // JavaScript part
-Donsort.config({
-    tableID: 'table1',
-    tbodyID: 'tbody1', 
-    sortedID: 'score1'
-}).listen('table');
+Dondrag.create(document.getElementById('demo'), {
+	group: {
+		pull: true
+	},
+	clone: false,
+	animation: 150,
+});
 ```
+~~You can use any element for the list and its elements, not just ul/li. Here is an example with divs.~~ Only support for `ol` || `ul`, other tags will be supported continuously.
 
-![img](http://www.jiangyu.me/img/0326/1.png)
+# Options
+### `group` options
+To drag elements from one list into another, if you set `pull: true`, this list can received the element from other lists.
 
-Donsort also supported the rule without special td id but set sortedID="all".
+### `clone` Boolean
+To clone the current element and drag it, the cloned element can be dragged into other **pull** lists.
 
-Under these circumstances, table would bind event with all <td> in the <thead><tr></tr></thead>.
-The example is as follows:
+### `animation` time
+Animation speed moving items when sorting. Unit of this is ms.
 
-```JavaScript
-Donsort.config({
-    tableID: 'table1',
-    tbodyID: 'tbody1', 
-    sortedID: 'all'    
-}).listen('table');
-```
 
-![img](http://www.jiangyu.me/img/0326/2.png)
+# Reference
+- https://github.com/webplus/blog/issues/5
+- https://github.com/RubaXa/Sortable
