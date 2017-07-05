@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dondrag.js</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style type="text/css">
+	body{
+		font-size: 15px;
+	}
+	.contrainer{
+		background-image: -webkit-linear-gradient(bottom, #F4E2C9 20%, #F4D7C9 100%);
+		background-image: -ms-linear-gradient(bottom, #F4E2C9 20%, #F4D7C9 100%);
+		background-image: linear-gradient(to bottom, #F4E2C9 20%, #F4D7C9 100%);
+		border: 1px solid #333;
+		border-radius: 10px;
+		width: 414px;
+		height: 736px;
+		margin: 10px;
+		font-size: 0px;
+	}
+
+	.wrapper div{
+		display: inline-block;
+	    vertical-align: text-top;
+	}
+	.wrapper div{
+		font-size: 12px;
+		padding: 2px 8px;
+	}
+	ul{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.block__list_words li {
+	    border: 1px solid #eee;
+		border-radius: 6px;
+		background-color: rgba(255, 255, 255, 0.8);
+		padding: 10px 6px;
+	    word-wrap: break-word;
+	}
+
+	li.focus{
+		color: #fff;
+		background-color:rgb(10,106,179);
+	}
+
+	
+	#demo0  {
+		width: 207px;
+	}
+	#demo1 li,
+	#demo2 li {
+		text-align:center;
+		width:86px;
+		cursor: move;
+	}
+	.topbar{
+		background-color: #fff;
+		color: #000;
+		text-align:center;
+		height:100px;
+		border 1px solid #000;
+		margin: 10px;
+	}
+	.topbar h1 {
+		line-height:100px;
+		font-size: 30px;
+	}
+	button{
+		position: absolute;
+		left: 500px;
+	}
+	</style>
+</head>
+<body>
+		<button onclick="myFunction()">change method</button>
+		<div class="contrainer">
+			<div class="topbar"><h1>Phone Topbar Location</h1></div>
+		
+			
+		<div class="wrapper">
+			<div id="demo0">
+				<ul class="demo0 panel-list block__list block__list_words">
+					<li>E1c_1. 养老保证</li>
+					<li>E!C_4. 城乡最低生活保障低保是什么经济适用房还是，什么？</li>
+					<li>Ques. 3</li>
+					<li>Ques. 4</li>
+					<li>Ques. 5</li>
+					<li>Ques. 6</li>
+					<li>Ques. 7</li>
+					<li>E!C_4. 城乡最低生活保障低保是什么经济适用房还是生活保障低保是什么经济适用？</li>
+					<li>Ques. 9</li>
+					<li>Ques. 10</li>
+					<li>Ques. 111</li>
+				</ul>
+			</div>
+			
+			<div id="demo1">
+				<ul class="demo1 panel-list block__list block__list_words" id="Dondrag_3">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+
+			<div id="demo2">
+				
+				<ul class="panel-list block__list block__list_words" id="Dondrag_4">
+					<li>有</li>
+					<li>没有</li>
+					<li>不知道</li>
+					<li>拒绝回答</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+
+
+
+<script type="text/javascript" src="./js/Dondrag.js"></script>
+<script type="text/javascript">
+function GetQueryString(name) {
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+
+function myFunction(){
+	var method = GetQueryString("method");
+	var url = window.location.href.split('?')[0];
+	if(method == "true") {
+		window.location = url + "?method=false";
+	} else {
+		window.location = url + "?method=true";
+	}
+	
+}
+window.onload=function(){
+	var sameHeight = GetQueryString("method");
+	//var sameHeight = false;
+	var origin = document.querySelectorAll("#demo0 ul li");
+	var tree = document.querySelectorAll("#demo1 ul li");
+		
+	if(sameHeight == "false"){
+		var minHeight = 1000;
+		
+		for(var i =0; i< tree.length; i++){
+			minHeight = minHeight > origin[i].offsetHeight ? origin[i].offsetHeight : minHeight;
+		}
+		for(var i =0; i< tree.length; i++){
+			if( origin[i].offsetHeight > minHeight){
+				var tmp = origin[i].offsetHeight - minHeight;
+				tree[i].style.marginBottom = tmp + "px";
+			} 
+			tree[i].style.height = minHeight + "px"
+			tree[i].style.lineHeight = (minHeight - 20) + "px"
+		}
+	} else {
+		for(var i =0; i< tree.length; i++){
+			tree[i].style.height = origin[i].offsetHeight + "px"
+			tree[i].style.lineHeight = (origin[i].offsetHeight-20) + "px"
+		}
+	
+	
+	}
+	
+	
+		
+
+	Dondrag.create(document.getElementById('Dondrag_4'), {
+		group: {
+			pull: false
+		},
+		clone: true,
+		animation: 150,
+  	});
+  
+}	
+</script>
+</html>
